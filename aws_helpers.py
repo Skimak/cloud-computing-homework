@@ -33,7 +33,8 @@ def create_client(service):
 S3_RESOURCE = create_resource('s3')
 S3_CLIENT = create_client('s3') 
 EC2_RESOURCE = create_resource('ec2')
- 
+CLOUDWATCH_RESOURCE = create_resource('cloudwatch')
+
 def get_buckets():
 	return S3_RESOURCE.buckets.all()
 
@@ -70,4 +71,9 @@ def make_str_unique(original_str):
 	unique_str = "".join(random.choices(string.ascii_lowercase + string.digits, k=8))
 	return f"{original_str}-{unique_str}"
 
-__all__ = ['S3_RESOURCE', 'S3_CLIENT', 'EC2_RESOURCE', 'get_buckets', 'make_str_unique']
+__all__ = [
+	'S3_RESOURCE', 'S3_CLIENT', 'get_buckets',
+	'EC2_RESOURCE',
+	'CLOUDWATCH_RESOURCE',
+	'make_str_unique'
+]
