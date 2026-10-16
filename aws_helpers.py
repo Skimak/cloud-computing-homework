@@ -77,5 +77,6 @@ __all__ = [
 	'EC2_RESOURCE',
 	'CLOUDWATCH_RESOURCE',
 	'AUTOSCALING_CLIENT',
-	'make_str_unique'
+	'make_str_unique',
+	'region_name',
 ]
