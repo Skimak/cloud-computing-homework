@@ -36,6 +36,7 @@ EC2_RESOURCE = create_resource('ec2')
 CLOUDWATCH_RESOURCE = create_resource('cloudwatch')
 AUTOSCALING_CLIENT = create_client('autoscaling')
 ELB_CLIENT = create_client('elbv2')
+DYNAMODB_RESOURCE = create_resource('dynamodb')
 
 def get_buckets():
 	return S3_RESOURCE.buckets.all()
@@ -79,6 +80,7 @@ __all__ = [
 	'CLOUDWATCH_RESOURCE',
 	'AUTOSCALING_CLIENT',
 	'ELB_CLIENT',
+	'DYNAMODB_RESOURCE',
 	'make_str_unique',
 	'region_name',
 ]
