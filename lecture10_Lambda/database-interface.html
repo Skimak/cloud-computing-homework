@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Records</title>
+</head>
+<form>
+	<label for="StudentId">StudentId:</label><br>
+	<input type="text" id="StudentId" name="StudentId"><br>
+	<label for="Name">Name:</label><br>
+	<input type="text" id="Name" name="Name"><br>
+	<label for="Major">Major:</label><br>
+	<input type="text" id="Major" name="Major"><br><br>
+	<button type="button" onclick="get_data()">Search</button>
+	<button type="button" onclick="add_data()">Add</button><br><br>
+	<textarea id="results" name="results" rows="4" cols="50"></textarea>
+</form>
+<script>
+api_url = 'https://khm0w6q8kf.execute-api.us-east-2.amazonaws.com'
+
+async function get_data() {
+	var student_id = document.getElementById("StudentId").value.trim()
+	var name = document.getElementById("Name").value.trim()
+	var major = document.getElementById("Major").value.trim()
+	var url = api_url + '/get_data'
+
+	var params = {}
+	if (student_id != '')
+		params = {StudentId: student_id}
+	if (name != '')
+		params = {Name: name}
+	if (major != '')
+		params = {Major: major}
+
+	var queryString = new URLSearchParams(params).toString();
+	url = url + '?' + queryString
+
+	try {
+		const response = await fetch(url)
+		if (!response.ok) {
+			document.getElementById("results").value = response.status
+		}
+		else {
+			const data = await response.json();
+			document.getElementById("results").value
+				= Array.isArray(data) ? data.join('\n') : JSON.stringify(data);
+		}
+	}
+	catch (error) {
+		document.getElementById("results").value = error.message
+	}
+}
+
+async function add_data() {
+	var student_id = document.getElementById("StudentId").value.trim()
+	var name = document.getElementById("Name").value.trim()
+	var major = document.getElementById("Major").value.trim()
+	var url = api_url + '/add_data'
+
+	try {
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({StudentId: student_id, Name: name, Major: major})
+		})
+
+		if (!response.ok) {
+			document.getElementById("results").value = response.status
+		}
+		else {
+			const data = await response.json();
+			document.getElementById("results").value = data
+		}
+	}
+	catch (error) {
+		document.getElementById("results").value = error.message
+	}
+}
+</script>
+</html>
